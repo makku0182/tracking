@@ -3,93 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweet Treats - Bakery</title>
-    
-    <link rel="stylesheet" href="styles.css">
+    <title>Location Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .app-header {
+            background-color: #4285f4;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .app-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: none;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        .tab.active {
+            background-color: #4285f4;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+        .map-container {
+            height: 300px;
+            background-color: #e9eaed;
+            margin: 15px 0;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .map-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #888;
+        }
+        .location-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .location-info {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .location-details {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid #ffb300;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .generated-link {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            word-break: break-all;
+        }
+        .copy-btn {
+            width: auto;
+            margin-top: 10px;
+            background-color: #43a047;
+        }
+        .tracking-list {
+            margin-top: 20px;
+        }
+        .tracking-item {
+            background-color: #f1f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4285f4;
+        }
+        .warning {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-      <header>
-        <nav>
-            <div class="logo">Sweet Treats</div>
-            <button class="menu-toggle" aria-label="Toggle Navigation">&#9776;</button>
-            <ul class="nav-links">
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#treats">Our Treats</a></li>
-                <li><a href="#buy-online">Order Online</a></li>
-                <li><a href="#footer">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-      <section id="hero" class="hero">
-    <div class="hero-content">
-        <h1>Indulge in the Sweet Life</h1>
-        <p>Freshly baked treats, made with love</p>
-        <a href="#treats" class="cta-button">Explore Our Treats</a>
-    </div>
-</section>
+    <div class="container">
+        <div class="app-header">
+            <h1>Location Sharing Demo</h1>
+            <p>Frontend-only demonstration (no real tracking capabilities)</p>
+        </div>
+        <div class="app-content">
+            <div class="tab-container">
+                <button class="tab active" onclick="openTab(event, 'create-tab')">Create Tracking Link</button>
+                <button class="tab" onclick="openTab(event, 'track-tab')">Track Location</button>
+            </div>
 
-      <section id="about" class="about-us">
-      <div class="about-container">
-        <div class="about-image mc">
-            <img src="./pic/owner.png" alt="Bakery Owner" />
-        </div>
-        <div class="about-text">
-            <h1 class="mp">About Us</h1>
-            <p class="mp">At Sweet Treats Bakery, we're passionate about creating delicious, homemade treats that bring joy to our customers. We use only the freshest ingredients and put love into every single item that leaves our bakery.</p>
-        </div>
-    </div>
-      </section>
-      
-      <section id="treats" class="featured-treats">
-    <h2 class="mp">Our Featured Treats</h2>
-    <div class="treat-gallery">
-        <div class="treat-item mc">
-            <img src="./pic/vanilla.png" alt="Vanilla Cupcake" />
-            <h3>Vanilla Cupcake</h3>
-            <p>₱ 40</p>
-        </div>
-        <div class="treat-item mc">
-            <img src="./pic/cookie.png" alt="Chocolate Chip Cookie" />
-            <h3>Chocolate Chip Cookie</h3>
-            <p>₱ 50</p>
-        </div>
-        <div class="treat-item mc">
-            <img src="./pic/cake.png" alt="Red Velvet Cake" />
-            <h3>Red Velvet Cake</h3>
-            <p>₱ 2,200 (whole cake)</p>
-        </div>
-    </div>
-</section>
+            <div id="create-tab" class="tab-content active">
+                <div class="form-group">
+                    <label for="original-link">Enter TikTok or other URL:</label>
+                    <input type="text" id="original-link" placeholder="https://www.tiktok.com/..." value="https://www.tiktok.com/@user/video/1234567890">
+                </div>
 
+                <div class="form-group">
+                    <label for="link-name">Give this tracking link a name:</label>
+                    <input type="text" id="link-name" placeholder="e.g., Brother's link">
+                </div>
 
+                <button onclick="generateTrackingLink()">Generate Tracking Link</button>
 
-      <section id="buy-online" class="buy-online">
-          <div class="cta-container">
-              <h2 class="mp">Get Your Sweet Fix Today!</h2>
-              <a href="#" class="cta-button mc">Order Online Now</a>
-              <p class="social-media mc">Follow us on <a href="https://www.instagram.com" target="_blank">Instagram</a> and <a href="https://www.facebook.com" target="_blank">Facebook</a> for updates, promotions, and behind-the-scenes peeks!</p>
-          </div>
-      </section>
-      
-      <footer id="footer" class="footer">
-    <div class="footer-container">
-        <div class="contact-info">
-            <h3>Contact Us</h3>
-            <p><strong>Address:</strong> 123 Main St, Anytown, USA</p>
-            <p><strong>Phone:</strong> <a href="tel:5555555555">555-555-5555</a></p>
-            <p><strong>Email:</strong> <a href="mailto:info@sweet-treats-bakery.com">info@sweet-treats-bakery.com</a></p>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 Sweet Treats Bakery. All rights reserved.</p>
+                <div id="generated-link-container" style="display: none;" class="generated-link">
+                    <p><strong>Your tracking link:</strong></p>
+                    <div id="tracking-link"></div>
+                    <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+                    <p class="warning">Note: This is a simulation. In a real app, this link would need to be hosted on a server.</p>
+                </div>
+
+                <div class="note">
+                    <p><strong>How this would work in a real implementation:</strong></p>
+                    <p>1. The generated link would redirect to the original URL</p>
+                    <p>2. Before redirecting, it would attempt to capture location (requiring user permission)</p>
+                    <p>3. The location data would be sent to a server and stored</p>
+                </div>
+            </div>
+
+            <div id="track-tab" class="tab-content">
+                <h2>Currently Tracking</h2>
+                <div id="no-tracking" style="font-style: italic; color: #888;">
+                    No active tracking links. Create one in the first tab.
+                </div>
+                <div id="tracking-list" class="tracking-list"></div>
+
+                <div class="map-container" id="map">
+                    <div class="map-placeholder">
+                        <p>Map would display here</p>
+                        <p>(Uses browser geolocation API in demo)</p>
+                    </div>
+                </div>
+
+                <button onclick="simulateNewLocation()">Simulate New Location Update</button>
+
+                <div class="note">
+                    <p><strong>Demo limitations:</strong></p>
+                    <p>- This is a frontend-only demo with simulated tracking</p>
+                    <p>- Real location tracking would require a backend server</p>
+                    <p>- Browsers require explicit user permission to access location</p>
+                </div>
+            </div>
         </div>
     </div>
-</footer>
 
+    <script>
+        // Store our demo tracking data
+        let trackingData = [];
+        let trackingCounter = 0;
 
-    
-    
-    <script src="script.js"></script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
 
+            const tablinks = document.getElementsByClassName("tab");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Generate a tracking link (demo only)
+        function generateTrackingLink() {
+            const originalLink = document.getElementById("original-link").value;
+            const linkName = document.getElementById("link-name").value || "Unnamed Link";
+            
+            if (!originalLink) {
+                alert("Please enter a valid URL");
+                return;
+            }
+
+            // Generate a tracking ID (this would normally be done server-side)
+            const trackingId = Math.random().toString(36).substring(2, 10);
+            
+            // In a real app, this would be a server URL that processes the redirect
+            // For the demo, we'll make a fake shortened URL
+            const trackingLink = `https://track.ly/${trackingId}`;
+            
+            document.getElementById("tracking-link").textContent = trackingLink;
+            document.getElementById("generated-link-container").style.display = "block";
+            
+            // Add to our demo tracking data
+            trackingData.push({
+                id: trackingId,
+                name: linkName,
+                originalUrl: originalLink,
+                created: new Date(),
+                locations: []
+            });
+            
+            updateTrackingList();
+        }
+
+        // Copy the generated link to clipboard
+        function copyLink() {
+            const linkText = document.getElementById("tracking-link").textContent;
+            navigator.clipboard.writeText(linkText).then(() => {
+                alert("Link copied to clipboard!");
+            });
+        }
+
+        // Update the list of tracking links
+        function updateTrackingList() {
+            const trackingList = document.getElementById("tracking-list");
+            const noTrackingMsg = document.getElementById("no-tracking");
+            
+            if (trackingData.length === 0) {
+                noTrackingMsg.style.display = "block";
+                trackingList.innerHTML = "";
+                return;
+            }
+            
+            noTrackingMsg.style.display = "none";
+            trackingList.innerHTML = "";
+            
+            trackingData.forEach(item => {
+                const trackingItem = document.createElement("div");
+                trackingItem.className = "tracking-item";
+                
+                let lastLocationInfo = "No location data yet";
+                if (item.locations.length > 0) {
+                    const lastLocation = item.locations[item.locations.length - 1];
+                    lastLocationInfo = `Location: ${lastLocation.lat.toFixed(6)}, ${lastLocation.lng.toFixed(6)}<br>
+                                       Time: ${lastLocation.time.toLocaleString()}`;
+                }
+                
+                trackingItem.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p class="location-details">Original URL: ${item.originalUrl}</p>
+                    <p class="location-details">Tracking ID: ${item.id}</p>
+                    <p class="location-details">Created: ${item.created.toLocaleString()}</p>
+                    <div class="location-info">
+                        <p><strong>Last known location:</strong></p>
+                        <p>${lastLocationInfo}</p>
+                    </div>
+                `;
+                
+                trackingList.appendChild(trackingItem);
+            });
+        }
+
+        // Simulate a new location update
+        function simulateNewLocation() {
+            if (trackingData.length === 0) {
+                alert("No tracking links created yet. Create one first.");
+                return;
+            }
+            
+            // Get demo coordinates (random locations near a central point)
+            const baseLat = 37.7749; // San Francisco
+            const baseLng = -122.4194;
+            
+            const newLat = baseLat + (Math.random() - 0.5) * 0.05;
+            const newLng = baseLng + (Math.random() - 0.5) * 0.05;
+            
+            // Update our tracking data
+            trackingData.forEach(item => {
+                item.locations.push({
+                    lat: newLat,
+                    lng: newLng,
+                    time: new Date()
+                });
+            });
+            
+            // Show the location on our fake map
+            showLocationOnMap(newLat, newLng);
+            
+            // Update the tracking list
+            updateTrackingList();
+        }
+
+        // Show location on our fake map
+        function showLocationOnMap(lat, lng) {
+            const map = document.getElementById("map");
+            
+            // Remove any existing markers
+            const existingMarkers = map.querySelectorAll('.location-marker');
+            existingMarkers.forEach(marker => marker.remove());
+            
+            // Create a new marker
+            const marker = document.createElement("div");
+            marker.className = "location-marker";
+            
+            // Position it on our fake map (percentage-based for demo)
+            const x = ((lng + 180) / 360) * 100;
+            const y = ((90 - lat) / 180) * 100;
+            
+            marker.style.left = `${x}%`;
+            marker.style.top = `${y}%`;
+            
+            map.appendChild(marker);
+            
+            // Update placeholder text
+            const placeholder = map.querySelector('.map-placeholder');
+            placeholder.innerHTML = `<p>Location: ${lat.toFixed(6)}, ${lng.toFixed(6)}</p>
+                                   <p>Updated: ${new Date().toLocaleTimeString()}</p>`;
+        }
+
+        // Initialize the app
+        updateTrackingList();
+    </script>
 </body>
-</html>
+    </html>
